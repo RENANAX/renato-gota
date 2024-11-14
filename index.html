@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Turnos</title>
+    <link rel="stylesheet" href="style-death-note.css">
+</head>
+<body>
+    <div class="navbar">
+        <h2>Sistema de Turnos</h2>
+    </div>
+
+    <div class="main-menu">
+        <button class="menu-button btn-vip" onclick="window.location.href='worker.html'">
+            Acceso Trabajadores
+        </button>
+        <button class="menu-button" onclick="window.location.href='customer.html'">
+            Solicitar Turno
+        </button>
+    </div>
+
+    <script src="turnoSystem.js"></script>
+    <script>
+        new TurnoSystem();
+    </script>
+</body>
+</html>

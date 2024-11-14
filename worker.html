@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Turnos - Panel de Control</title>
+    <link rel="stylesheet" href="style-death-note.css">
+</head>
+<body>
+    <div class="navbar">
+        <h2>Panel de Control - Sistema de Turnos</h2>
+        <div class="nav-buttons">
+            <button id="logoutBtn" onclick="logout()" style="display: none;">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <div id="loginForm" class="login-container">
+        <h2>Acceso Trabajadores</h2>
+        <form onsubmit="return login(event)">
+            <input type="text" id="usuario" placeholder="Usuario" required>
+            <input type="password" id="contrasena" placeholder="Contraseña" required>
+            <button type="submit" class="login-btn">Iniciar Sesión</button>
+        </form>
+        <p id="mensajeError" class="error-message"></p>
+    </div>
+
+    <div id="workerPanel" class="worker-panel" style="display: none;">
+        <div class="panel-tabs">
+            <button class="tab-btn active" onclick="showTab('atencion')">Atención al Cliente</button>
+            <button class="tab-btn" onclick="showTab('generacion')">Generación de Turnos</button>
+        </div>
+
+        <div id="atencionTab" class="tab-content active">
+            <div class="panel-container">
+                <div class="cajas-container" id="cajas"></div>
+                <div class="colas-container">
+                    <div class="cola-seccion vip">
+                        <h2>Cola VIP</h2>
+                        <div id="cola-vip"></div>
+                    </div>
+                    <div class="cola-seccion normal">
+                        <h2>Cola Normal</h2>
+                        <div id="cola-normal"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="generacionTab" class="tab-content">
+            <div class="generacion-container">
+                <div class="ticket-generation">
+                    <h2>Generación de Turnos</h2>
+                    <div class="generation-buttons">
+                        <button class="btn-vip" onclick="window.turnoSystem.generarTurnoCliente('vip')">
+                            Generar Turno VIP
+                        </button>
+                        <button onclick="window.turnoSystem.generarTurnoCliente('normal')">
+                            Generar Turno Normal
+                        </button>
+                    </div>
+                </div>
+                <div class="current-ticket-display">
+                    <h3>Último Turno Generado</h3>
+                    <div id="currentNumber" class="current-number"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login(event) {
+            event.preventDefault();
+            const usuario = document.getElementById('usuario').value;
+            const contrasena = document.getElementById('contrasena').value;
+            const mensajeError = document.getElementById('mensajeError');
+            
+            if (usuario === 'admin' && contrasena === '1234') {
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('workerPanel').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
+                initializeSystem();
+            } else {
+                mensajeError.textContent = 'Usuario o contraseña incorrectos';
+                mensajeError.style.display = 'block';
+                document.getElementById('loginForm').classList.add('shake');
+                setTimeout(() => {
+                    document.getElementById('loginForm').classList.remove('shake');
+                }, 500);
+            }
+        }
+
+        function logout() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('workerPanel').style.display = 'none';
+            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('usuario').value = '';
+            document.getElementById('contrasena').value = '';
+            document.getElementById('mensajeError').style.display = 'none';
+        }
+
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab-content');
+            const buttons = document.querySelectorAll('.tab-btn');
+            
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            document.querySelector(`button[onclick="showTab('${tabName}')"]`).classList.add('active');
+        }
+
+        function initializeSystem() {
+            const turnoSystem = new TurnoSystem();
+            window.turnoSystem = turnoSystem;
+        }
+    </script>
+    <script src="turnoSystem.js"></script>
+</body>
+</html>

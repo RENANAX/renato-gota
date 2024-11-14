@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Cajero</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f2f5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .queue-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .vip {
+            border: 2px solid gold;
+        }
+        .normal {
+            border: 2px solid #4CAF50;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button.vip-btn {
+            background: #ffd700;
+            color: black;
+        }
+        .customer {
+            background: #f8f9fa;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Sistema de Turnos</h1>
+        <button onclick="addCustomer('vip')">Nuevo Cliente VIP</button>
+        <button onclick="addCustomer('normal')">Nuevo Cliente Normal</button>
+    </div>
+
+    <div class="container">
+        <div class="queue-section vip">
+            <h2>Cola VIP</h2>
+            <div id="vip-queue"></div>
+        </div>
+
+        <div class="queue-section normal">
+            <h2>Cola Normal</h2>
+            <div id="normal-queue"></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <h2>Control de Cajas</h2>
+        <button class="vip-btn" onclick="attendCustomer('vip')">Atender VIP</button>
+        <button onclick="attendCustomer('normal')">Atender Normal</button>
+    </div>
+
+    <script>
+        let vipQueue = [];
+        let normalQueue = [];
+        let vipCounter = 1;
+        let normalCounter = 1;
+
+        function addCustomer(type) {
+            if (type === 'vip') {
+                vipQueue.push(`VIP-${vipCounter++}`);
+            } else {
+                normalQueue.push(`N-${normalCounter++}`);
+            }
+            updateQueues();
+        }
+
+        function attendCustomer(type) {
+            if (type === 'vip' && vipQueue.length > 0) {
+                vipQueue.shift();
+            } else if (type === 'normal' && normalQueue.length > 0) {
+                normalQueue.shift();
+            } else {
+                alert('No hay clientes en esta cola');
+            }
+            updateQueues();
+        }
+
+        function updateQueues() {
+            document.getElementById('vip-queue').innerHTML = vipQueue
+                .map(customer => `<div class="customer">${customer}</div>`)
+                .join('');
+            
+            document.getElementById('normal-queue').innerHTML = normalQueue
+                .map(customer => `<div class="customer">${customer}</div>`)
+                .join('');
+        }
+
+        // Inicializar las colas
+        updateQueues();
+    </script>
+</body>
+</html>

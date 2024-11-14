@@ -1,0 +1,218 @@
+/* Death Note Theme */
+@import url('https://fonts.googleapis.com/css2?family=Old+English+Text+MT&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&display=swap');
+
+:root {
+    --death-note-black: #0a0a0a;
+    --death-note-red: #6b0000;
+    --death-note-gold: #9a7b45;
+    --death-note-paper: #e6d5b8;
+    --death-note-ink: #1a0c08;
+}
+
+body {
+    font-family: 'Crimson Text', serif;
+    background-color: var(--death-note-black);
+    color: var(--death-note-ink);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Animaciones */
+@keyframes ticketPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+/* Mega Ticket Animation */
+.mega-ticket {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--death-note-paper);
+    padding: 2rem;
+    border: 4px double var(--death-note-gold);
+    box-shadow: 0 0 50px rgba(139, 0, 0, 0.5);
+    z-index: 1000;
+    text-align: center;
+    animation: ticketAppear 0.5s ease-out;
+}
+
+@keyframes ticketAppear {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Login Styles */
+.login-container {
+    background: var(--death-note-paper);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 2rem auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    animation: slideIn 0.5s ease-out;
+}
+
+.login-container.shake {
+    animation: shake 0.5s ease-in-out;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid var(--death-note-gold);
+    border-radius: 4px;
+    font-family: 'Crimson Text', serif;
+}
+
+.error-message {
+    color: var(--death-note-red);
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Panel Styles */
+.worker-panel {
+    padding: 20px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.panel-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin: 20px;
+}
+
+/* Cajas Styles */
+.cajas-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.caja {
+    background: var(--death-note-paper);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    animation: slideIn 0.5s ease-out;
+}
+
+.caja:hover {
+    transform: translateY(-5px);
+}
+
+.caja.vip {
+    border: 2px solid var(--death-note-red);
+}
+
+.caja.normal {
+    border: 2px solid var(--death-note-gold);
+}
+
+/* Cola Styles */
+.cola-seccion {
+    background: var(--death-note-paper);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.cliente {
+    padding: 10px;
+    margin: 5px 0;
+    border-left: 3px solid var(--death-note-ink);
+    background: rgba(255,255,255,0.5);
+    transition: transform 0.3s ease;
+}
+
+.cliente:hover {
+    transform: translateX(5px);
+}
+
+.cliente-vip {
+    border-left-color: var(--death-note-red);
+}
+
+/* Current Number Display */
+.current-number {
+    font-size: 4rem;
+    color: var(--death-note-red);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    animation: ticketPulse 0.5s ease-out;
+}
+
+/* Buttons */
+button {
+    background: var(--death-note-black);
+    color: var(--death-note-paper);
+    border: 1px solid var(--death-note-gold);
+    padding: 10px 20px;
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: var(--death-note-red);
+    transform: translateY(-2px);
+}
+
+.btn-vip {
+    background: var(--death-note-red);
+    border-color: var(--death-note-gold);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .panel-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .cajas-container {
+        grid-template-columns: 1fr;
+    }
+}
